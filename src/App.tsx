@@ -1,13 +1,19 @@
-import React from 'react';
-import {BrowserRouter, Switch, Route, RouteComponentProps} from 'react-router-dom';
+import React, {useState} from 'react';
+import {BrowserRouter, Route, RouteComponentProps, Switch} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import IRoute from './configurations/models/IRouter';
 import routes from './configurations/router';
+import {AppContext} from "./core/context/appContext";
+import useIsAuthentication from "./core/hooks/useIsAuthentication";
 
 const App: React.FC = () => {
-    return (
-        <>
 
+    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(useIsAuthentication());
+
+    const authenticated = (isAuthenticated: boolean) => setIsAuthenticate(isAuthenticated);
+
+    return (
+        <AppContext.Provider value={{authenticated: isAuthenticate, setAuthenticated: authenticated}}>
             <BrowserRouter>
                 <Navbar/>
                 <Switch>
@@ -26,7 +32,7 @@ const App: React.FC = () => {
                     )}
                 </Switch>
             </BrowserRouter>
-        </>
+        </AppContext.Provider>
     );
 }
 

@@ -7,6 +7,7 @@ export const Container = styled.div`
   height: 75px;
   background-color: var(--primary-color);
   display: flex;
+  flex: 3;
   align-items: center;
   justify-content: space-between;
 `;
@@ -16,8 +17,7 @@ export const ItemWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
-
+  flex: 3;
 `;
 
 export const Title = styled(Link)`
@@ -36,6 +36,26 @@ export const Title = styled(Link)`
 export const Item = styled(Link)`
   display: flex;
   align-items: center;
+  justify-items: center;
+  margin-left: 18px;
+  font-family: var(--subtitle-font);
+  font-size: 21px;
+  color: white;
+  margin-right: 10px;
+  transition: color .2s;
+  height: 100%;
+  text-decoration: none;
+  
+  @media (max-width: ${breakpointsWidth.sm}) {
+    margin-left: 10px;
+  }
+`;
+
+
+export const Sair = styled.button`
+
+  display: flex;
+  align-items: center;
   margin-left: 18px;
   font-family: var(--subtitle-font);
   font-size: 21px;
@@ -45,19 +65,6 @@ export const Item = styled(Link)`
   width: 95px;
   height: 100%;
   text-decoration: none;
+  background-color: transparent;
 
-
-  &:hover {
-    border-radius: 10px;
-    background-color: var(--white-color);
-    width: 95px;
-    height: 100%;
-    justify-content: center;
-    border-radius: 10px;
-    color: var(--primary-color);
-  }
-
-  @media (max-width: ${breakpointsWidth.sm}) {
-    margin-left: 10px;
-  }
 `;

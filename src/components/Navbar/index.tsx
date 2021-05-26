@@ -1,16 +1,31 @@
-import React from 'react';
-import {Container, Item, ItemWrapper, Title} from './styles';
-
+import React, {useContext} from 'react';
+import {Container, Item, ItemWrapper, Sair, Title} from './styles';
+import {AppContext} from '../../core/context/appContext';
+import {useHistory} from "react-router-dom";
 
 const Navbar: React.FC = () => {
+
+    const {authenticated, setAuthenticated} = useContext(AppContext);
+
+    const history = useHistory();
+
+    const logout = () => {
+        localStorage.clear();
+        setAuthenticated(false);
+        history.push("/")
+    }
+
     return (
+
         <Container>
             <Title to="/">Simple Mooc</Title>
             <ItemWrapper>
-                <Item to="/login">Cursos</Item>
-                <Item to="/login">Acessar</Item>
+                <Item to="/">Cursos</Item>
+                {authenticated ? <Item to="/login">Meus Cursos</Item> : <></>}
+                {authenticated ? <Sair onClick={() => logout()}>Sair</Sair> : <Item to="/login">Acessar</Item>}
             </ItemWrapper>
         </Container>
+
     );
 }
 

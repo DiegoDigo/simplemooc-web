@@ -25,7 +25,7 @@ const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 
                 <Data>{formatDate(date)}</Data>
                 <IconWrapper>
                     {Array.from({ length: starts }, (v, i) => (
-                        <Stars />
+                        <Stars key={i}/>
                     ))}
                 </IconWrapper>
             </DataWrapper>

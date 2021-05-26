@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {CardWrapper, Container, Title} from './styles';
 import CardItem from "../../components/CardItem/Index";
-import {CourseResponse} from "../../data/models/CourseResponse";
+import {CourseResponse} from "../../data/models/Response/CourseResponse";
 import {getAllCourse} from "../../data/services/CursoService";
 
 const HomePage: React.FC = () => {
