@@ -6,6 +6,6 @@ export const getAllEnrollment = () => {
     return api.get<BaseResponse<Array<CourseResponse>>>("enrollments");
 }
 
-export const getEnrollmentByCourse = (id: string) => {
+export const getEnrollmentByCourse = async (id: string) => {
     return api.post<BaseResponse<CourseResponse>>("enrollments", {courseId: id});
 }

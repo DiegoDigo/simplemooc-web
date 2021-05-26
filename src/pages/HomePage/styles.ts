@@ -19,4 +19,20 @@ export const Title = styled.h1`
   padding-left: 2%;
   padding-right: 2%;
   padding-top: 2%;
+  font-family: var(--title-font);
+`;
+
+export const WrapperNoData = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: calc(100vh - 150px);  
+
+`;
+
+export const NoDataText = styled.h1`
+  font-size: 30px;
+  font-family: var(--subtitle-font);
 `;

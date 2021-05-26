@@ -19,10 +19,15 @@ import IconStar from "../../components/IconStars";
 import {formatDate} from "../../core/util/data.util";
 import {useAppContext} from "../../core/context/appContext";
 import {getEnrollmentByCourse} from "../../data/services/EnrollmentService";
+import Modal from "../../components/Modal";
 
 const DetailPage: React.FC = () => {
 
     const [course, setCourse] = useState({} as CourseResponse);
+
+    const [isShow, setIsShow] = useState(false);
+    const [isError, setIsError] = useState(false);
+
     const {authenticated} = useAppContext();
 
     const {slug} = useParams<DetailParams>();
@@ -33,14 +38,28 @@ const DetailPage: React.FC = () => {
         history.push("/login");
     }
 
-    const enrollmentByCurse = (id: string) => {
-        getEnrollmentByCourse(id).then(resp => console.log(resp)).catch(error => console.log(error));
+    const enrollmentByCurse = async (id: string) => {
+        await getEnrollmentByCourse(id)
+            .then(resp => {
+                if (resp.data.success && resp.status === 200) {
+                    setIsShow(true);
+                    setIsError(false);
+                } else {
+                    setIsShow(true);
+                    setIsError(true)
+                }
+            })
+            .catch(_ => {
+                setIsShow(true);
+                setIsError(true);
+            });
     }
 
     useEffect(() => {
         getCourseBySlug(slug).then(resp => {
             if (resp.status === 200 && resp.data.success) {
                 setCourse(resp.data.content);
+
             }
         })
     }, [slug]);
@@ -54,8 +73,10 @@ const DetailPage: React.FC = () => {
                     <IconStar stars={3}/>
                 </DataWrapper>
                 <ButtonWrapper>
-                    {authenticated ? <Button onClick={() => enrollmentByCurse(course.id)}>Inscrever-se</Button> :
-                        <Button onClick={goLogin}>Cadastrar-se</Button>}
+                    {authenticated ?
+                        <Button onClick={() => enrollmentByCurse(course.id)}>Inscrever-se</Button> :
+                        <Button onClick={goLogin}>Cadastrar-se</Button>
+                    }
                 </ButtonWrapper>
             </ImageWrapper>
 
@@ -63,7 +84,7 @@ const DetailPage: React.FC = () => {
                 <Title>{course.name}</Title>
                 <Description>{course.description}</Description>
             </InfoWrapper>
-
+            <Modal show={isShow} error={isError}/>
         </Container>
     );
 }

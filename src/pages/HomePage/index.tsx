@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {CardWrapper, Container, Title} from './styles';
+import {CardWrapper, Container, Title, WrapperNoData, NoDataText} from './styles';
 import CardItem from "../../components/CardItem/Index";
 import {CourseResponse} from "../../data/models/Response/CourseResponse";
 import {getAllCourse} from "../../data/services/CursoService";
@@ -32,20 +32,29 @@ const HomePage: React.FC = () => {
     }, [history])
 
 
+    const noDataComponent = () => {
+        return (
+            <WrapperNoData>
+                <NoDataText>Você ainda não possui cursos!</NoDataText>
+            </WrapperNoData>
+        );
+    }
+
     return (
         <Container>
             <Title>{isMyCourse ? "Meus Cursos" : "Escolha um novo curso"}</Title>
             <CardWrapper>
-                {courses.map((course, index) => {
-                    return (<CardItem key={course.id}
-                                      url={course.url}
-                                      starts={index === 0 ? 1 : index <= 5 ? index : 5 }
-                                      title={course.name}
-                                      description={course.description}
-                                      date={course.start}
-                                      slug={course.slug}
-                    />);
-                })}
+                {courses.length === 0 ? noDataComponent() :
+                    courses.map((course, index) => {
+                        return (<CardItem key={course.id}
+                                          url={course.url}
+                                          starts={index === 0 ? 1 : index <= 5 ? index : 5}
+                                          title={course.name}
+                                          description={course.description}
+                                          date={course.start}
+                                          slug={course.slug}
+                        />);
+                    })}
 
             </CardWrapper>
         </Container>
