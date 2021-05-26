@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
 
     const history = useHistory();
 
-    const { setAuthenticated} = useContext(AppContext);
+    const {setAuthenticated} = useContext(AppContext);
 
     const loging = async (data: LoginRequest) => {
         await login(data).then((resp) => {
@@ -35,8 +35,12 @@ const LoginPage: React.FC = () => {
                 const {refresh, token} = resp.data.content
                 setLocalStorage("token", token);
                 setLocalStorage("refresh", refresh);
-                history.push("/");
                 setAuthenticated(true);
+                if (history.length > 0) {
+                    history.goBack();
+                } else {
+                    history.push("/");
+                }
             }
         }).catch((error) => console.log(error));
     }

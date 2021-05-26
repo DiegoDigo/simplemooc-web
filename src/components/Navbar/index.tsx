@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
             <Title to="/">Simple Mooc</Title>
             <ItemWrapper>
                 <Item to="/">Cursos</Item>
-                {authenticated ? <Item to="/login">Meus Cursos</Item> : <></>}
+                {authenticated ? <Item to="/my">Meus Cursos</Item> : <></>}
                 {authenticated ? <Sair onClick={() => logout()}>Sair</Sair> : <Item to="/login">Acessar</Item>}
             </ItemWrapper>
         </Container>

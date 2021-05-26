@@ -8,33 +8,28 @@ import {
     ButtonWrapper,
     Button,
     DataWrapper,
-    Data,
-    Stars,
-    IconWrapper
+    Data
 } from './styles';
 import {ICardItem} from "../../core/models/CardItemModel";
 import {capitalize} from "../../core/util/string.util";
 import {formatDate} from "../../core/util/data.util";
+import IconStar from "../IconStars";
 
 
-const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 5}) => {
+const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 5, slug}) => {
     return (
         <Container>
             <Image src={url}/>
             <DataWrapper>
                 <Data>{formatDate(date)}</Data>
-                <IconWrapper>
-                    {Array.from({ length: starts }, (v, i) => (
-                        <Stars key={i}/>
-                    ))}
-                </IconWrapper>
+                <IconStar stars={starts}/>
             </DataWrapper>
             <DetailWrapper>
                 <Title>{capitalize(title)}</Title>
                 <Description>{capitalize(description)}</Description>
             </DetailWrapper>
             <ButtonWrapper>
-                <Button to="/login">Ver mais</Button>
+                <Button to={`/detail/${slug}`}>Ver mais</Button>
             </ButtonWrapper>
         </Container>
     );

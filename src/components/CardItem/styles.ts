@@ -28,6 +28,7 @@ export const Image = styled.img`
   height: 162px;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
+  object-fit: cover;
 `;
 
 export const Title = styled.h1`

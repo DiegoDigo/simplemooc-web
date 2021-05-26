@@ -4,30 +4,46 @@ import {CardWrapper, Container, Title} from './styles';
 import CardItem from "../../components/CardItem/Index";
 import {CourseResponse} from "../../data/models/Response/CourseResponse";
 import {getAllCourse} from "../../data/services/CursoService";
+import {useHistory} from "react-router-dom";
+import {getAllEnrollment} from "../../data/services/EnrollmentService";
 
 const HomePage: React.FC = () => {
 
+    const history = useHistory()
     const [courses, setCourses] = useState([] as Array<CourseResponse>)
+    const [isMyCourse, setIsMyCourse] = useState(false)
+
 
     useEffect(() => {
-        getAllCourse().then(resp => {
-            if (resp.status === 200 && resp.data.success) {
-                setCourses(resp.data.content);
-            }
-        })
-    }, [])
+        if (history.location.pathname.startsWith("/my")) {
+            setIsMyCourse(true);
+            getAllEnrollment().then(resp => {
+                if (resp.status === 200 && resp.data.success) {
+                    setCourses(resp.data.content);
+                }
+            })
+        } else {
+            getAllCourse().then(resp => {
+                if (resp.status === 200 && resp.data.success) {
+                    setCourses(resp.data.content);
+                }
+            })
+        }
+    }, [history])
+
 
     return (
         <Container>
-            <Title>Escolha seu novo curso</Title>
+            <Title>{isMyCourse ? "Meus Cursos" : "Escolha um novo curso"}</Title>
             <CardWrapper>
-                {courses.map((course , index) => {
+                {courses.map((course, index) => {
                     return (<CardItem key={course.id}
                                       url={course.url}
-                                      starts={index}
+                                      starts={index === 0 ? 1 : index <= 5 ? index : 5 }
                                       title={course.name}
                                       description={course.description}
                                       date={course.start}
+                                      slug={course.slug}
                     />);
                 })}
 

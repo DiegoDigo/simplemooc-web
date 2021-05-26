@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter, Route, RouteComponentProps, Switch} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import IRoute from './configurations/models/IRouter';
@@ -8,9 +8,15 @@ import useIsAuthentication from "./core/hooks/useIsAuthentication";
 
 const App: React.FC = () => {
 
-    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(useIsAuthentication());
+    const stateAuth = useIsAuthentication();
+
+    const [isAuthenticate, setIsAuthenticate] = useState<boolean>(stateAuth);
 
     const authenticated = (isAuthenticated: boolean) => setIsAuthenticate(isAuthenticated);
+
+    useEffect(() => {
+        authenticated(stateAuth);
+    }, [stateAuth])
 
     return (
         <AppContext.Provider value={{authenticated: isAuthenticate, setAuthenticated: authenticated}}>

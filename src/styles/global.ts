@@ -24,8 +24,8 @@ export default createGlobalStyle`
     --error-color: #F44336;
     --backgroud-color: #eeeeee;
 
-    --title-font: 'Supermercado One', cursive;
-    --subtitle-font: 'Raleway', sans-serif;
+    --title-font: 'Fjalla One', sans-serif;
+    --subtitle-font: 'Montserrat', sans-serif;
 
   }
 `;

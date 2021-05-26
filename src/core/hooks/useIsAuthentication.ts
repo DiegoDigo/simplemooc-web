@@ -6,6 +6,7 @@ const useIsAuthentication = () => {
 
     useEffect(() => {
         let localStorage = getLocalStorage("token");
+        console.log(localStorage)
         if (localStorage) {
             setIsAuthentication(true);
         }
