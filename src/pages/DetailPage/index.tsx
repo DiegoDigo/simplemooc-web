@@ -9,7 +9,8 @@ import {
     ImageWrapper,
     InfoWrapper,
     Title,
-    ButtonWrapper
+    ButtonWrapper,
+    Teste
 } from './styles';
 import {useHistory, useParams} from 'react-router-dom'
 import {DetailParams} from "../../core/models/params/DetailParams";
@@ -84,6 +85,8 @@ const DetailPage: React.FC = () => {
                 <Title>{course.name}</Title>
                 <Description>{course.description}</Description>
             </InfoWrapper>
+
+            <Teste><h1>Comentarios</h1></Teste>
             <Modal show={isShow} error={isError}/>
         </Container>
     );

@@ -5,9 +5,10 @@ export const Container = styled.div`
   padding: 2%;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-areas: "img desc";
+  grid-template-areas: "img desc" "img tt";
+  grid-template-rows: 40%;
   grid-gap: 18px;
-  height: calc(80vh - 75px);
+  height: calc(100vh - 75px);
 
 
   @media (max-width: ${breakpointsWidth.sm}) {
@@ -108,4 +109,15 @@ export const Button = styled.button`
   margin-top: 20px;
   cursor: pointer;
 `;
+
+export const Teste = styled.div`
+  grid-area: tt;
+  display: flex;
+  align-items: flex-start;  
+  height: 100%;
+  width: 100%;
+  background-color: red;
+  padding: 18px;
+`;
+
 
