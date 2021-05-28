@@ -113,10 +113,10 @@ export const Button = styled.button`
 export const Teste = styled.div`
   grid-area: tt;
   display: flex;
-  align-items: flex-start;  
+  flex-direction: column;
+  align-items: flex-start;
   height: 100%;
   width: 100%;
-  background-color: red;
   padding: 18px;
 `;
 

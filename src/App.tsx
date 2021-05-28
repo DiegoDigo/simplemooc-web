@@ -5,21 +5,27 @@ import IRoute from './configurations/models/IRouter';
 import routes from './configurations/router';
 import {AppContext} from "./core/context/appContext";
 import useIsAuthentication from "./core/hooks/useIsAuthentication";
+import useRole from "./core/hooks/useRole";
 
 const App: React.FC = () => {
 
     const stateAuth = useIsAuthentication();
+    const stateRole = useRole();
 
     const [isAuthenticate, setIsAuthenticate] = useState<boolean>(stateAuth);
+    const [roles, setRoles] = useState<string>(stateRole);
 
     const authenticated = (isAuthenticated: boolean) => setIsAuthenticate(isAuthenticated);
+    const role = (role: string) => setRoles(role);
 
     useEffect(() => {
         authenticated(stateAuth);
-    }, [stateAuth])
+        role(stateRole);
+    }, [stateAuth, stateRole])
 
     return (
-        <AppContext.Provider value={{authenticated: isAuthenticate, setAuthenticated: authenticated}}>
+        <AppContext.Provider
+            value={{authenticated: isAuthenticate, setAuthenticated: authenticated, role: roles, setRole: role}}>
             <BrowserRouter>
                 <Navbar/>
                 <Switch>

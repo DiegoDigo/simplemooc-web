@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
 
     const history = useHistory();
 
-    const {setAuthenticated} = useContext(AppContext);
+    const {setAuthenticated, setRole} = useContext(AppContext);
 
     const loging = async (data: LoginRequest) => {
         await login(data).then((resp) => {
@@ -36,6 +36,7 @@ const LoginPage: React.FC = () => {
                 setLocalStorage("token", token);
                 setLocalStorage("refresh", refresh);
                 setAuthenticated(true);
+                setRole("Admin");
                 if (history.length > 0) {
                     history.goBack();
                 } else {

@@ -18,6 +18,10 @@ export const ItemWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   flex: 3;
+
+  @media all and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Title = styled(Link)`

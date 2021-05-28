@@ -5,13 +5,14 @@ import {useHistory} from "react-router-dom";
 
 const Navbar: React.FC = () => {
 
-    const {authenticated, setAuthenticated} = useContext(AppContext);
+    const {authenticated, setAuthenticated, role, setRole} = useContext(AppContext);
 
     const history = useHistory();
 
     const logout = () => {
         localStorage.clear();
         setAuthenticated(false);
+        setRole("");
         history.push("/")
     }
 
@@ -21,6 +22,7 @@ const Navbar: React.FC = () => {
             <Title to="/">Simple Mooc</Title>
             <ItemWrapper>
                 <Item to="/">Cursos</Item>
+                {role === 'Admin' ? <Item to="/create">Criar</Item> : <></>}
                 {authenticated ? <Item to="/my">Meus Cursos</Item> : <></>}
                 {authenticated ? <Sair onClick={() => logout()}>Sair</Sair> : <Item to="/login">Acessar</Item>}
             </ItemWrapper>

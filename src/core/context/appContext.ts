@@ -3,7 +3,9 @@ import {ContextProps} from "../models/ContextProps";
 
 export const contextDefaultValues: ContextProps = {
     authenticated: false,
-    setAuthenticated: () => {}
+    setAuthenticated: () => {},
+    role: "",
+    setRole: () => {}
 };
 
 export const AppContext = createContext<ContextProps>(contextDefaultValues);

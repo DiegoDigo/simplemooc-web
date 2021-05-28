@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
     Button,
+    ButtonWrapper,
     Container,
     Data,
     DataWrapper,
@@ -8,9 +9,9 @@ import {
     Image,
     ImageWrapper,
     InfoWrapper,
-    Title,
-    ButtonWrapper,
-    Teste
+    Teste,
+    Title
+
 } from './styles';
 import {useHistory, useParams} from 'react-router-dom'
 import {DetailParams} from "../../core/models/params/DetailParams";
@@ -21,10 +22,15 @@ import {formatDate} from "../../core/util/data.util";
 import {useAppContext} from "../../core/context/appContext";
 import {getEnrollmentByCourse} from "../../data/services/EnrollmentService";
 import Modal from "../../components/Modal";
+import {getLesson} from "../../data/services/lessonService";
+import {LessonResponse} from "../../data/models/Response/LessonResponse";
+import MyTable from "../../components/MyTable";
+
 
 const DetailPage: React.FC = () => {
 
     const [course, setCourse] = useState({} as CourseResponse);
+    const [lessons, setLessons] = useState([] as Array<LessonResponse>);
 
     const [isShow, setIsShow] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -57,13 +63,32 @@ const DetailPage: React.FC = () => {
     }
 
     useEffect(() => {
-        getCourseBySlug(slug).then(resp => {
-            if (resp.status === 200 && resp.data.success) {
-                setCourse(resp.data.content);
 
-            }
-        })
-    }, [slug]);
+        if (authenticated) {
+            getCourseBySlug(slug)
+                .then((resp) => {
+                    if (resp.status === 200 && resp.data.success) {
+                        setCourse(resp.data.content);
+                        return getLesson(resp.data.content.id);
+                    }
+                })
+                .then((response) => {
+                    if (response?.status === 200 && response?.data.success) {
+                        setLessons(response?.data.content);
+
+                    }
+                });
+
+        } else {
+            getCourseBySlug(slug).then(resp => {
+                if (resp.status === 200 && resp.data.success) {
+                    setCourse(resp.data.content);
+                }
+            });
+        }
+
+
+    }, [slug, authenticated]);
 
     return (
         <Container>
@@ -86,7 +111,12 @@ const DetailPage: React.FC = () => {
                 <Description>{course.description}</Description>
             </InfoWrapper>
 
-            <Teste><h1>Comentarios</h1></Teste>
+            {authenticated ?
+                <Teste>
+                    <Title>Aulas</Title>
+                    <MyTable lessons={lessons}/>
+                </Teste> :
+                <></>}
             <Modal show={isShow} error={isError}/>
         </Container>
     );
