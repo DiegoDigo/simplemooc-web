@@ -19,6 +19,8 @@ import Input from '../../components/Input';
 import {setLocalStorage} from "../../core/util/localstorage.util";
 import {login} from "../../data/services/UserService";
 import {AppContext} from "../../core/context/appContext";
+import {decode} from "jsonwebtoken";
+import {Token} from "../../core/models/Token";
 
 
 const LoginPage: React.FC = () => {
@@ -29,14 +31,15 @@ const LoginPage: React.FC = () => {
 
     const {setAuthenticated, setRole} = useContext(AppContext);
 
-    const loging = async (data: LoginRequest) => {
+    const logging = async (data: LoginRequest) => {
         await login(data).then((resp) => {
             if (resp.status === 200 && resp.data.success) {
                 const {refresh, token} = resp.data.content
                 setLocalStorage("token", token);
                 setLocalStorage("refresh", refresh);
+                const tokenDecode = decode(token) as Token;
+                setRole(tokenDecode.role);
                 setAuthenticated(true);
-                setRole("Admin");
                 if (history.length > 0) {
                     history.goBack();
                 } else {
@@ -55,7 +58,7 @@ const LoginPage: React.FC = () => {
                     <SubTitleCard>seu app open sorce de cursos</SubTitleCard>
                     <Formik initialValues={intialValues} validationSchema={LoginSchemaValidator}
                             onSubmit={(values) => {
-                                loging(values);
+                                logging(values);
                             }}>
                         {(formik) => {
                             const {errors} = formik;

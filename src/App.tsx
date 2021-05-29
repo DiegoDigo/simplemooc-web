@@ -6,6 +6,9 @@ import routes from './configurations/router';
 import {AppContext} from "./core/context/appContext";
 import useIsAuthentication from "./core/hooks/useIsAuthentication";
 import useRole from "./core/hooks/useRole";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
 
 const App: React.FC = () => {
 
@@ -44,6 +47,7 @@ const App: React.FC = () => {
                     )}
                 </Switch>
             </BrowserRouter>
+            <ToastContainer/>
         </AppContext.Provider>
     );
 }

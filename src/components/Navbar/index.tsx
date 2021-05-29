@@ -22,8 +22,8 @@ const Navbar: React.FC = () => {
             <Title to="/">Simple Mooc</Title>
             <ItemWrapper>
                 <Item to="/">Cursos</Item>
-                {role === 'Admin' ? <Item to="/create">Criar</Item> : <></>}
-                {authenticated ? <Item to="/my">Meus Cursos</Item> : <></>}
+                {authenticated && role !== 'Admin' ? <Item to="/my">Meus Cursos</Item> : <></>}
+                {authenticated && role === 'Admin' ? <Item to="/create">Criar</Item> : <></>}
                 {authenticated ? <Sair onClick={() => logout()}>Sair</Sair> : <Item to="/login">Acessar</Item>}
             </ItemWrapper>
         </Container>

@@ -7,11 +7,15 @@ import {create} from "../../data/services/UserService";
 import {setLocalStorage} from "../../core/util/localstorage.util";
 import {RegisterSchemaValidator} from "../../core/models/Validators/user.validators";
 import {RegisterRequest} from "../../data/models/Request/RegisterRequest";
+import {useAppContext} from "../../core/context/appContext";
+import {decode} from "jsonwebtoken";
+import {Token} from "../../core/models/Token";
 
 
 const RegisterPage: React.FC = () => {
 
     const intialValues: RegisterRequest = {email: "", password: ""};
+    const {setRole} = useAppContext();
     const history = useHistory();
 
     const register = async (data: RegisterRequest) => {
@@ -20,6 +24,8 @@ const RegisterPage: React.FC = () => {
                 const {refresh, token} = resp.data.content
                 setLocalStorage("token", token);
                 setLocalStorage("refresh", refresh);
+                const tokenDecode = decode(token) as Token;
+                setRole(tokenDecode.role);
                 history.push("/");
             }).catch((error) => console.log(error));
     }

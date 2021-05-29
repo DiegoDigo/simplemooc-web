@@ -68,8 +68,9 @@ const DetailPage: React.FC = () => {
                     {authenticated && role === "Admin" ?
                         <Button onClick={() => setShow(true)}><IconAdd/>Adicionar aula</Button> :
                         <></>}
-                    {authenticated ? <Button onClick={() => enrollmentByCurse(course.id)}>Inscrever-se</Button> :
-                        <Button onClick={goLogin}>Cadastrar-se</Button>}
+                    {role !== 'Admin' ? authenticated ?
+                        <Button onClick={() => enrollmentByCurse(course.id)}>Inscrever-se</Button> :
+                        <Button onClick={goLogin}>Cadastrar-se</Button> : <></>}
                 </ButtonWrapper>
             </ImageWrapper>
 

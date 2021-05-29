@@ -2,11 +2,14 @@ import axios from "axios";
 import {getLocalStorage, setLocalStorage} from "../core/util/localstorage.util";
 import {BaseResponse} from "./models/Response/BaseResponse";
 import {TokenResponse} from "./models/Response/TokenResponse";
+import { toast } from 'react-toastify';
+import { createBrowserHistory } from 'history';
 
 const api = axios.create({
     baseURL: "http://localhost:5000/api/v1",
 });
 
+const history = createBrowserHistory();
 
 api.interceptors.request.use(
     async config => {
@@ -23,6 +26,9 @@ api.interceptors.request.use(
 
 
 api.interceptors.response.use((response) => {
+    if (response?.status === 201) {
+        toast.success(response?.data?.message)
+    }
     return response
 }, function (error) {
     const originalRequest = error.config;
@@ -45,6 +51,15 @@ api.interceptors.response.use((response) => {
                     return axios(originalRequest);
                 }
             })
+    }
+
+    if (error?.response?.status === 403) {
+        toast.warn("Não tem premisão pra isso.")
+        history.goBack();
+    }
+
+    if (error?.response?.status === 406) {
+        toast.error(error?.response?.data.message)
     }
 
     return Promise.reject(error);
