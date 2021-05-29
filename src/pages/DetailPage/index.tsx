@@ -78,7 +78,7 @@ const DetailPage: React.FC = () => {
                 <Description>{course.description}</Description>
             </InfoWrapper>
 
-            <ModalAddLesson course={course} show={show} key={course.id}/>
+            <ModalAddLesson course={course} show={show} key={course.id} setShowParent={setShow}/>
         </Container>
     );
 }

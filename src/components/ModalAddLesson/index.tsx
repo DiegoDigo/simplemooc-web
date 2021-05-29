@@ -12,7 +12,7 @@ import {createLesson} from "../../data/services/lessonService";
 import Modal from "../Modal";
 
 
-const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show}) => {
+const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowParent}) => {
 
     const initialValues: LessonRequest = {courseId: course.id, name: "", material: undefined, description: ""};
     const history = useHistory();
@@ -43,6 +43,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show}) => {
 
     const close = () => {
         setIsShow(false);
+        setShowParent(false);
     }
 
     return (
@@ -60,7 +61,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show}) => {
                             <FormStyle>
                                 <Input label="Nome" placeholder="ex: aula de layout" name="name"
                                        isValid={(errors.name === undefined || errors.name === null)}/>
-                                <InputFile label="Aula" name="material" setFieldValue={setFieldValue}
+                                <InputFile label="Aula" name="material" setFieldValue={setFieldValue} type="video/*"
                                            isValid={(errors.material === undefined || errors.material === null)}/>
                                 <Input label="Descrição" name="description"
                                        isValid={(errors.description === undefined || errors.description === null)}/>
