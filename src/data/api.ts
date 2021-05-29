@@ -27,7 +27,7 @@ api.interceptors.response.use((response) => {
 }, function (error) {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry) {
 
         originalRequest._retry = true;
         return api.post<BaseResponse<TokenResponse>>("users/token/refresh",
@@ -36,7 +36,7 @@ api.interceptors.response.use((response) => {
             })
             .then(res => {
                 if (res.status === 200 && res.data.success) {
-                    const { token, refresh } = res.data.content;
+                    const {token, refresh} = res.data.content;
                     setLocalStorage("token", token);
                     setLocalStorage("refresh", refresh);
 
@@ -46,6 +46,7 @@ api.interceptors.response.use((response) => {
                 }
             })
     }
+
     return Promise.reject(error);
 });
 

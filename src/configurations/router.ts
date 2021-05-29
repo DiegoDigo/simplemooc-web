@@ -3,6 +3,7 @@ import IRoute from "./models/IRouter";
 import HomePage from "../pages/HomePage";
 import DetailPage from "../pages/DetailPage";
 import RegisterPage from "../pages/RegisterPage";
+import DetailMyCoursePage from "../pages/DetailMyCuorsePage";
 
 const routes: IRoute[] = [
     {
@@ -33,6 +34,12 @@ const routes: IRoute[] = [
         path: '/detail/:slug',
         name: 'Detail Page',
         component: DetailPage,
+        exact: true
+    },
+    {
+        path: '/detail/my/:slug',
+        name: 'Detail My Course Page',
+        component: DetailMyCoursePage,
         exact: true
     }
 ]

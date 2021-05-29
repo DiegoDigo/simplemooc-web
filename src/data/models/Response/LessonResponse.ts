@@ -3,6 +3,7 @@ export interface LessonResponse {
     name: string
     description: string
     number: number,
+    url: string,
     releaseDate: Date
 
 }

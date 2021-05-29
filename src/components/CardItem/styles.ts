@@ -34,6 +34,7 @@ export const Image = styled.img`
 export const Title = styled.h1`
   font-size: 20px;
   margin-bottom: 10px;
+  font-family: var(--title-font);
 `;
 
 export const Description = styled.p`
@@ -78,7 +79,7 @@ export const DataWrapper = styled.div`
   align-items: center;
   align-self: center;
   justify-content: space-between;
-  padding: 18px 18px 0px;
+  padding: 18px 18px 0;
 `;
 
 

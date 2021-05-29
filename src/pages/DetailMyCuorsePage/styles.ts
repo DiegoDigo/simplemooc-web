@@ -7,9 +7,10 @@ export const Container = styled.div`
   padding: 2%;
   display: grid;
   grid-template-columns: 1fr 2.5fr;
-  grid-template-areas: "img desc" "img tt";
+  grid-template-areas: "img vd" "img tt";
   grid-gap: 18px;
   height: calc(100vh - 75px);
+
 
   @media (max-width: ${breakpointsWidth.sm}) {
     display: flex;
@@ -26,8 +27,14 @@ export const ImageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-height: calc(100vh - 240px);
   border-radius: 15px;
   background-color: var(--white-color);
+
+
+  @media (max-width: ${breakpointsWidth.sm}) {
+    max-height: 100%;
+  }
 `;
 
 export const Image = styled.img`
@@ -48,12 +55,11 @@ export const Image = styled.img`
 
 export const InfoWrapper = styled.div`
 
-  grid-area: desc;
+  grid-area: vd;
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 16px;
 
   @media (max-width: ${breakpointsWidth.sm}) {
     display: flex;
@@ -86,6 +92,7 @@ export const Description = styled.p`
   font-size: 20px;
   font-family: var(--subtitle-font);
   font-weight: 300;
+  margin-top: 10px;
 `;
 
 
@@ -101,9 +108,6 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const Button = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 20px;
   color: var(--white-color);
   background-color: red;
@@ -114,11 +118,20 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
+export const WrapperLesson = styled.div`
+  grid-area: tt;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+  padding: 18px;
+`;
 
 export const TitleWrapper = styled.div`
   grid-area: tt;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   padding: 18px;
@@ -133,12 +146,25 @@ export const WrapperHeader = styled.div`
 `;
 
 export const IconAdd = styled(MdAdd)`
-  width: 20px;
-  height: 20px;
+  width: 45px;
+  height: 45px;
   color: var(--white-color);
 
 `;
 
+export const ButtonAdd = styled(Button)`
+  width: 45px;
+  border-radius: 18px;
+  margin-top: 0;
+`;
+
+export const SubTitle = styled(Title)`
+  margin-bottom: 0;
+`;
 
 
+export const Video = styled.video`
 
+  width: 100%;
+  height: 100%;
+`;

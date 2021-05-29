@@ -9,8 +9,10 @@ const lis = css`
   border-radius: 3px;
   padding: 25px 30px;
   display: flex;
-  justify-content: space-between;
   margin-bottom: 10px;
+  align-items: center;
+  justify-self: center;
+  justify-content: space-around;
 
   @media all and (max-width: 767px) {
     display: block;
@@ -21,9 +23,11 @@ export const Row = styled.li`
   ${lis};
   background-color: #ffffff;
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.1);
+  width: 100%;
 `;
 
 export const Item = styled.div`
+
 
 `;
 
@@ -82,6 +86,17 @@ export const Header = styled.li`
 
 export const WrapperRow = styled.div`
   width: 100%;
-  max-height: 100%;
+  max-height: 64%;
   overflow-y: auto;
+
+`;
+
+
+export const Click = styled.div`
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
 `;

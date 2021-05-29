@@ -15,6 +15,8 @@ const Modal: React.FC<ModalModel> = ({show, error}) => {
     const close = () => {
         if(!error){
             history.push("/my");
+        }else{
+            history.push("/login");
         }
         setIsShow(false);
     }
