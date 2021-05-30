@@ -11,9 +11,10 @@ import {postCourse} from "../../data/services/CursoService";
 import ModalCreateModel from "../../core/models/ModalCreateModel";
 import {useHistory} from "react-router-dom";
 
-const ModalCreate: React.FC<ModalCreateModel> = ({show, setAdd}) => {
+const ModalCreate: React.FC<ModalCreateModel> = ({show, setAdd,}) => {
 
-    const initialValues: CourseRequest = {name: "", image: undefined, description: ""};
+    const initialValues: CourseRequest = {name: "", image: undefined, description: ""}
+
     const [isShow, setIsShow] = useState(false);
     const history = useHistory();
 
@@ -30,7 +31,7 @@ const ModalCreate: React.FC<ModalCreateModel> = ({show, setAdd}) => {
 
     const createCource = (value: CourseRequest) => {
         postCourse(value).then(_ => {
-           close()
+            close()
         })
     }
 

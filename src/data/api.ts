@@ -2,8 +2,8 @@ import axios from "axios";
 import {getLocalStorage, setLocalStorage} from "../core/util/localstorage.util";
 import {BaseResponse} from "./models/Response/BaseResponse";
 import {TokenResponse} from "./models/Response/TokenResponse";
-import { toast } from 'react-toastify';
-import { createBrowserHistory } from 'history';
+import {toast} from 'react-toastify';
+import {createBrowserHistory} from 'history';
 
 const api = axios.create({
     baseURL: "http://localhost:5000/api/v1",
@@ -54,8 +54,17 @@ api.interceptors.response.use((response) => {
     }
 
     if (error?.response?.status === 403) {
-        toast.warn("Não tem premisão pra isso.")
+        toast.warn("No access.")
         history.goBack();
+    }
+
+    if (error?.response?.status === 500) {
+        toast.warn("No access.")
+        history.goBack();
+    }
+
+    if (error?.response?.status === 404) {
+        toast.info("Not found.")
     }
 
     if (error?.response?.status === 406) {

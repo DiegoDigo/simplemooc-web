@@ -3,7 +3,7 @@ import IInput from '../../core/models/InputModel';
 
 import {Label, InputField, MsgError} from './styles';
 
-const Input: React.FC<IInput> = ({label, name, placeholder, type = "text", changeValue, isValid,}) => {
+const Input: React.FC<IInput> = ({label, name, placeholder, type = "text", isValid}) => {
     return (
         <>
             <Label>{label}</Label>

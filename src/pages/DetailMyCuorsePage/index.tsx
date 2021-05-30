@@ -4,7 +4,6 @@ import {
     Data,
     DataWrapper,
     Description,
-    Image,
     ImageWrapper,
     InfoWrapper,
     SubTitle,
@@ -25,6 +24,7 @@ import {getLesson} from "../../data/services/lessonService";
 import {LessonResponse} from "../../data/models/Response/LessonResponse";
 import MyTable from "../../components/MyTable";
 import {DetailParams} from "../../core/models/params/DetailParams";
+import Image from "../../components/Image";
 
 
 const DetailMyCoursePage: React.FC = () => {
@@ -81,8 +81,7 @@ const DetailMyCoursePage: React.FC = () => {
     return (
         <Container>
             <ImageWrapper>
-                <Image src={course.url}/>
-
+                <Image url={course.url}/>
                 <DataWrapper>
                     <Data>{formatDate(course.start)}</Data>
                     <IconStar stars={3}/>

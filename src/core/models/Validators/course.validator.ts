@@ -41,19 +41,41 @@ export const LessonSchemaValidator = Yup.object().shape({
 export const CourseSchemaValidator = Yup.object().shape({
 
     name: Yup.string()
-        .required("Email e obrigatorio"),
+        .required("Nome é obrigatório"),
 
     image: Yup.mixed()
-        .required("Imagem e obrigatorio")
+        .required("Imagem é obrigatório")
         .test(
-            "tamanho do arquivo",
+            "Tamanho do arquivo",
             "Arquivo muito grande",
             value => value && value.size <= FILE_SIZE
         )
         .test(
             "FormatoAqruivo",
             "Arquivo não suportado",
-            value => value && IMAGES_SUPPORTED_FORMATS.includes(value.type?.toLowerCase())
+            value => value  && IMAGES_SUPPORTED_FORMATS.includes(value.type?.toLowerCase())
+        ),
+
+
+});
+
+
+
+export const CourseUpdateSchemaValidator = Yup.object().shape({
+
+    name: Yup.string()
+        .required("Nome é obrigatório"),
+
+    image: Yup.mixed()
+        .test(
+            "tamanho do arquivo",
+            "Arquivo muito grande",
+            value => value !== undefined && value !== null && value.size <= FILE_SIZE
+        )
+        .test(
+            "FormatoAqruivo",
+            "Arquivo não suportado",
+            value => value !== undefined && value !== null  && IMAGES_SUPPORTED_FORMATS.includes(value.type?.toLowerCase())
         ),
 
 

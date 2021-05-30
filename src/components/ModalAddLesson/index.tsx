@@ -10,6 +10,7 @@ import {LessonSchemaValidator} from "../../core/models/Validators/course.validat
 import {LessonRequest} from "../../data/models/Request/LessonRequest";
 import {createLesson} from "../../data/services/lessonService";
 import Modal from "../Modal";
+import Loading from "../Loading";
 
 
 const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowParent}) => {
@@ -17,6 +18,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
     const initialValues: LessonRequest = {courseId: course.id, name: "", material: undefined, description: ""};
     const history = useHistory();
     const [isShow, setIsShow] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [isShowInfo, setIsShowInfo] = useState(false);
     const [error, setError] = useState(false);
 
@@ -27,16 +29,19 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
 
     const addLesson = async (values: LessonRequest) => {
         values.courseId = course.id;
+        setLoading(true);
         await createLesson(values)
             .then(resp => {
                 if (resp.status === 201 && resp.data.success) {
                     history.go(0);
                     setIsShowInfo(false);
                     setError(false);
+                    setLoading(false);
                 }
             }).catch(_ => {
                 setIsShowInfo(true);
                 setError(true);
+                setLoading(false);
             });
     }
 
@@ -66,7 +71,8 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
                                 <Input label="Descrição" name="description"
                                        isValid={(errors.description === undefined || errors.description === null)}/>
                                 <WrapperButton>
-                                    <Button type="submit">Adicionar Aula</Button>
+                                    {loading ? <Button> <Loading/></Button> :
+                                        <Button type="submit">Adicionar Aula</Button>}
                                     <ButtonClose onClick={close}>Fechar</ButtonClose>
                                 </WrapperButton>
                             </FormStyle>

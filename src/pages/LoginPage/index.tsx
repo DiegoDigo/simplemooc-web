@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {LoginSchemaValidator} from '../../core/models/Validators/user.validators';
 import {Link, useHistory} from "react-router-dom";
 import {Formik} from "formik";
@@ -21,17 +21,20 @@ import {login} from "../../data/services/UserService";
 import {AppContext} from "../../core/context/appContext";
 import {decode} from "jsonwebtoken";
 import {Token} from "../../core/models/Token";
+import Loading from "../../components/Loading";
 
 
 const LoginPage: React.FC = () => {
 
     const intialValues: LoginRequest = {email: "", password: ""};
+    const [loading, setLoading] = useState(false);
 
     const history = useHistory();
 
     const {setAuthenticated, setRole} = useContext(AppContext);
 
     const logging = async (data: LoginRequest) => {
+        setLoading(true);
         await login(data).then((resp) => {
             if (resp.status === 200 && resp.data.success) {
                 const {refresh, token} = resp.data.content
@@ -40,13 +43,16 @@ const LoginPage: React.FC = () => {
                 const tokenDecode = decode(token) as Token;
                 setRole(tokenDecode.role);
                 setAuthenticated(true);
+
                 if (history.length > 0) {
                     history.goBack();
                 } else {
                     history.push("/");
                 }
             }
-        }).catch((error) => console.log(error));
+        }).catch((_) => {
+            setLoading(false);
+        });
     }
 
 
@@ -68,7 +74,7 @@ const LoginPage: React.FC = () => {
                                            isValid={(errors.email === undefined || errors.email === null)}/>
                                     <Input label="Senha" type="password" name="password"
                                            isValid={(errors.password === undefined || errors.password === null)}/>
-                                    <Button type="submit">Acessar</Button>
+                                    {loading ? <Button><Loading/></Button> : <Button type="submit">Acessar</Button>}
                                 </FormStyle>
                             );
                         }}

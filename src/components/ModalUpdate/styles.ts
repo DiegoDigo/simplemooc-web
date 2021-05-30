@@ -26,7 +26,7 @@ export const Container = styled.div`
     width: 90%;
     height: 90%;
   }
-  
+
 `;
 
 export const InfoWrapper = styled.div`
@@ -58,10 +58,6 @@ export const Description = styled.p`
 
 
 export const Button = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin-top: 20px;
   width: 50%;
   height: 45px;

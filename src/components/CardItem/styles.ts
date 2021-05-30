@@ -64,11 +64,13 @@ export const Button = styled(Link)`
   height: 40px;
   background-color: var(--primary-color);
   color: var(--white-color);
-  font-weight: bold;
-  font-size: 18px;
+  font-size: 17px;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   text-decoration: none;
+  font-family: var(--subtitle-font);
+  font-weight: bolder;
+  
 `;
 
 

@@ -53,6 +53,8 @@ export const Button = styled.button`
   height: 45px;
   border-radius: 45px;
   cursor: pointer;
+  font-family: var(--subtitle-font);
+  font-weight: bolder;
 
 `;
 

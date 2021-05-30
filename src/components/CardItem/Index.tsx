@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     Container,
-    Image,
     Title,
     Description,
     DetailWrapper,
@@ -16,6 +15,7 @@ import {formatDate} from "../../core/util/data.util";
 import IconStar from "../IconStars";
 import {useAppContext} from "../../core/context/appContext";
 import {useHistory} from "react-router-dom";
+import Image from "../Image";
 
 
 const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 5, slug}) => {
@@ -30,7 +30,7 @@ const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 
 
     return (
         <Container>
-            <Image src={url}/>
+            <Image url={url} home={true}/>
             <DataWrapper>
                 <Data>{formatDate(date)}</Data>
                 <IconStar stars={starts}/>

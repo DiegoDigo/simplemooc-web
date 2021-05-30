@@ -6,5 +6,5 @@ export default interface IInput {
     placeholder?: string,
     type?: string,
     changeValue?: ChangeEventHandler
-    isValid?: boolean,
+    isValid?: boolean
 }

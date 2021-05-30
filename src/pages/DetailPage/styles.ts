@@ -1,13 +1,15 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {breakpointsWidth} from "../../styles/variables";
-import {MdAdd} from "react-icons/md";
+import {MdAdd, MdEdit} from "react-icons/md";
 
 
 export const Container = styled.div`
   padding: 2%;
   display: grid;
   grid-template-columns: 1fr 2.5fr;
-  grid-template-areas: "img desc" "img tt";
+  grid-template-areas: "img desc" 
+                       "img desc";
+  grid-auto-rows: 50%;
   grid-gap: 18px;
   height: calc(100vh - 75px);
 
@@ -29,22 +31,6 @@ export const ImageWrapper = styled.div`
   border-radius: 15px;
   background-color: var(--white-color);
 `;
-
-export const Image = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-
-  @media (max-width: ${breakpointsWidth.sm}) {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    width: 100%;
-    height: 100%;
-  }
-
-`;
-
 
 export const InfoWrapper = styled.div`
 
@@ -112,6 +98,8 @@ export const Button = styled.button`
   border-radius: 45px;
   margin-top: 20px;
   cursor: pointer;
+  font-family: var(--subtitle-font);
+  font-weight: bolder;
 `;
 
 
@@ -132,13 +120,21 @@ export const WrapperHeader = styled.div`
   padding: 18px;
 `;
 
-export const IconAdd = styled(MdAdd)`
+
+const Icon = css`
   width: 20px;
   height: 20px;
   color: var(--white-color);
-
+  margin-right: 5px;
 `;
 
+export const IconAdd = styled(MdAdd)`
+  ${Icon};
+`;
+
+export const IconEdit = styled(MdEdit)`
+  ${Icon};
+`;
 
 
 

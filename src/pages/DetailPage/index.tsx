@@ -7,7 +7,7 @@ import {
     DataWrapper,
     Description,
     IconAdd,
-    Image,
+    IconEdit,
     ImageWrapper,
     InfoWrapper,
     Title,
@@ -23,12 +23,17 @@ import {useAppContext} from "../../core/context/appContext";
 import {getEnrollmentByCourse} from "../../data/services/EnrollmentService";
 import useRole from "../../core/hooks/useRole";
 import ModalAddLesson from "../../components/ModalAddLesson";
+import Image from "../../components/Image";
+import ModalUpdate from "../../components/ModalUpdate";
+
 
 const DetailPage: React.FC = () => {
 
     const [course, setCourse] = useState({} as CourseResponse);
     const {authenticated} = useAppContext();
     const [show, setShow] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [url, setUrl] = useState<any>(undefined);
 
     const {slug} = useParams<DetailParams>();
     const history = useHistory();
@@ -46,9 +51,11 @@ const DetailPage: React.FC = () => {
     }
 
     useEffect(() => {
+        setEdit(false);
         getCourseBySlug(slug).then(resp => {
             if (resp.status === 200 && resp.data.success) {
                 setCourse(resp.data.content);
+                setUrl(resp.data.content.url);
             }
         })
     }, [slug]);
@@ -56,7 +63,7 @@ const DetailPage: React.FC = () => {
     return (
         <Container>
             <ImageWrapper>
-                <Image src={course.url}/>
+                <Image url={url}/>
                 <TitleWrapper>
                     <Title>{course.name}</Title>
                 </TitleWrapper>
@@ -65,6 +72,9 @@ const DetailPage: React.FC = () => {
                     <IconStar stars={3}/>
                 </DataWrapper>
                 <ButtonWrapper>
+                    {authenticated && role === "Admin" ?
+                        <Button onClick={() => setEdit(true)}><IconEdit/>Editar</Button> :
+                        <></>}
                     {authenticated && role === "Admin" ?
                         <Button onClick={() => setShow(true)}><IconAdd/>Adicionar aula</Button> :
                         <></>}
@@ -79,6 +89,7 @@ const DetailPage: React.FC = () => {
             </InfoWrapper>
 
             <ModalAddLesson course={course} show={show} key={course.id} setShowParent={setShow}/>
+            <ModalUpdate show={edit} setAdd={setEdit}  course={course} />
         </Container>
     );
 }

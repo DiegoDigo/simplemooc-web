@@ -24,6 +24,7 @@ export const Row = styled.li`
   background-color: #ffffff;
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.1);
   width: 100%;
+  cursor: pointer;
 `;
 
 export const Item = styled.div`
@@ -55,17 +56,17 @@ export const Col1 = styled.div`
 `;
 
 export const Col2 = styled.div`
-  flex-basis: 40%;
+  flex-basis: 80%;
   ${col}
 `;
 
 export const Col3 = styled.div`
-  flex-basis: 25%;
+  flex-basis: 50%;
   ${col}
 `;
 
 export const Col4 = styled.div`
-  flex-basis: 25%;
+  flex-basis: 10%;
   ${col}
 `;
 
@@ -86,7 +87,7 @@ export const Header = styled.li`
 
 export const WrapperRow = styled.div`
   width: 100%;
-  max-height: 64%;
+  max-height: 90%;
   overflow-y: auto;
 
 `;

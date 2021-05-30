@@ -1,5 +1,5 @@
 import {Formik} from 'formik';
-import React from 'react';
+import React, {useState} from 'react';
 import Input from '../../components/Input';
 import {Button, CardContainer, Container, FormContainer, FormStyle, SubTitleCard, TitleCard} from "./styles";
 import {useHistory} from "react-router-dom";
@@ -10,15 +10,18 @@ import {RegisterRequest} from "../../data/models/Request/RegisterRequest";
 import {useAppContext} from "../../core/context/appContext";
 import {decode} from "jsonwebtoken";
 import {Token} from "../../core/models/Token";
+import Loading from "../../components/Loading";
 
 
 const RegisterPage: React.FC = () => {
 
     const intialValues: RegisterRequest = {email: "", password: ""};
+    const [loading, setLoading] = useState(false);
     const {setRole} = useAppContext();
     const history = useHistory();
 
     const register = async (data: RegisterRequest) => {
+        setLoading(true);
         await create(data)
             .then((resp) => {
                 const {refresh, token} = resp.data.content
@@ -27,7 +30,7 @@ const RegisterPage: React.FC = () => {
                 const tokenDecode = decode(token) as Token;
                 setRole(tokenDecode.role);
                 history.push("/");
-            }).catch((error) => console.log(error));
+            }).catch((_) => setLoading(false));
     }
 
     return (<Container>
@@ -47,7 +50,7 @@ const RegisterPage: React.FC = () => {
                                        isValid={(errors.email === undefined || errors.email === null)}/>
                                 <Input label="Senha" type="password" name="password"
                                        isValid={(errors.password === undefined || errors.password === null)}/>
-                                <Button type="submit">Criar Conta</Button>
+                                {loading ? <Button><Loading/></Button> : <Button type="submit">Registrar</Button>}
                             </FormStyle>
                         );
                     }}
