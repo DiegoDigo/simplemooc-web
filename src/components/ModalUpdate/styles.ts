@@ -54,6 +54,11 @@ export const Title = styled.h1`
 export const Description = styled.p`
   font-family: var(--subtitle-font);
   color: ${(props: Props) => props.error ? "white" : "black"};
+
+  @media (max-width: ${breakpointsWidth.sm}) {
+    font-size: 18px;
+    text-align: center;
+  }
 `;
 
 

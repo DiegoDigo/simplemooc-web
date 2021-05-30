@@ -26,12 +26,12 @@ const ModalCreate: React.FC<ModalCreateModel> = ({show, setAdd,}) => {
     const close = () => {
         setAdd(false);
         setIsShow(false);
-        history.go(0);
     }
 
     const createCource = (value: CourseRequest) => {
         postCourse(value).then(_ => {
             close()
+            history.go(0);
         })
     }
 

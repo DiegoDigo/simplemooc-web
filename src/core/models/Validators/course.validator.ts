@@ -66,17 +66,4 @@ export const CourseUpdateSchemaValidator = Yup.object().shape({
     name: Yup.string()
         .required("Nome é obrigatório"),
 
-    image: Yup.mixed()
-        .test(
-            "tamanho do arquivo",
-            "Arquivo muito grande",
-            value => value !== undefined && value !== null && value.size <= FILE_SIZE
-        )
-        .test(
-            "FormatoAqruivo",
-            "Arquivo não suportado",
-            value => value !== undefined && value !== null  && IMAGES_SUPPORTED_FORMATS.includes(value.type?.toLowerCase())
-        ),
-
-
 });
