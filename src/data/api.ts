@@ -4,9 +4,10 @@ import {BaseResponse} from "./models/Response/BaseResponse";
 import {TokenResponse} from "./models/Response/TokenResponse";
 import {toast} from 'react-toastify';
 import {createBrowserHistory} from 'history';
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PROD_API_URL : "http://localhost:5000";
 
 const api = axios.create({
-    baseURL: "http://localhost:5000/api/v1",
+    baseURL: `${apiUrl}/api/v1`,
 });
 
 const history = createBrowserHistory();

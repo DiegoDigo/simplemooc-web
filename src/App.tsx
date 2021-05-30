@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
     const authenticated = (isAuthenticated: boolean) => setIsAuthenticate(isAuthenticated);
     const role = (role: string) => setRoles(role);
-
+    
     useEffect(() => {
         authenticated(stateAuth);
         role(stateRole);
