@@ -45,7 +45,7 @@ const DetailPage: React.FC = () => {
 
     const enrollmentByCurse = (id: string) => {
         getEnrollmentByCourse(id).then(resp => {
-            const slug = resp.data.content.course.slug
+            const {slug} = resp.data.content
             history.push(`my/${slug}`)
         }).catch(error => console.log(error));
     }
