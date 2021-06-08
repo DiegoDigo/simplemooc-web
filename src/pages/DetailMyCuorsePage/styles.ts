@@ -34,6 +34,11 @@ export const ImageWrapper = styled.div`
 
   @media (max-width: ${breakpointsWidth.sm}) {
     max-height: 100%;
+
+  } 
+  @media (max-height: ${breakpointsWidth.sm}) {
+    max-height: calc(657px - 150px);
+
   }
 `;
 

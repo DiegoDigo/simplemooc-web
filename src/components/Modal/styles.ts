@@ -2,8 +2,7 @@ import styled from "styled-components";
 import {breakpointsWidth} from "../../styles/variables";
 
 interface Props {
-    show?: boolean,
-    error?: boolean
+    show?: boolean
 }
 
 
@@ -35,29 +34,42 @@ export const InfoWrapper = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
-  background-color: ${(props: Props) => props.error ? "red" : "white"};
+  background-color: var(--white-color);
 
 `;
 
 export const Title = styled.h1`
   font-family: var(--title-font);
-  color: ${(props: Props) => props.error ? "white" : "black"};
+  color: var(--black-color);
 `;
 
 export const Description = styled.p`
   font-family: var(--subtitle-font);
-  color: ${(props: Props) => props.error ? "white" : "black"};
+  color: var(--black-color);
 `;
 
 
 export const Button = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   width: 50%;
   height: 45px;
   font-size: 18px;
-  font-weight: 600;
   border-radius: 15px;
   cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  font-family: var(--subtitle-font);
+  font-weight: bolder;
 
+`;
+
+export const ButtonClose = styled(Button)`
+  background-color: #eeeeee;
+  color: var(--baclk-color);
+  margin-left: 10px;
 `;
 

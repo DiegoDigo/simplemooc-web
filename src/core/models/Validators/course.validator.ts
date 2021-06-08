@@ -43,6 +43,9 @@ export const CourseSchemaValidator = Yup.object().shape({
     name: Yup.string()
         .required("Nome é obrigatório"),
 
+    description: Yup.string()
+        .required("Descrição é obrigatório"),
+
     image: Yup.mixed()
         .required("Imagem é obrigatório")
         .test(

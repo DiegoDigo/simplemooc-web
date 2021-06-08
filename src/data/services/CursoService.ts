@@ -12,6 +12,15 @@ export const getCourseBySlug = (slug: string) => {
     return api.get<BaseResponse<CourseResponse>>(`courses/${slug}`);
 }
 
+export const searchCourse = (search: string) => {
+    return api.get<BaseResponse<Array<CourseResponse>>>(`courses/search/${search}`);
+}
+
+export const deleteCourse = (id: string) => {
+    return api.delete<BaseResponse<null>>(`courses/${id}`);
+}
+
+
 export const postCourse = (course: CourseRequest) => {
 
     const frm = new FormData()

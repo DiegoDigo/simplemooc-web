@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
+    Button,
+    ButtonWrapper,
     Container,
     Data,
     DataWrapper,
@@ -11,9 +13,7 @@ import {
     TitleWrapper,
     Video,
     WrapperHeader,
-    WrapperLesson,
-    ButtonWrapper,
-    Button
+    WrapperLesson
 } from './styles';
 import {useHistory, useParams} from 'react-router-dom'
 import {getCourseBySlug} from "../../data/services/CursoService";
@@ -21,7 +21,6 @@ import {CourseResponse} from "../../data/models/Response/CourseResponse";
 import IconStar from "../../components/IconStars";
 import {formatDate} from "../../core/util/data.util";
 import {useAppContext} from "../../core/context/appContext";
-import Modal from "../../components/Modal";
 import {getLesson} from "../../data/services/lessonService";
 import {LessonResponse} from "../../data/models/Response/LessonResponse";
 import MyTable from "../../components/MyTable";
@@ -37,8 +36,6 @@ const DetailMyCoursePage: React.FC = () => {
     const [urlVideo, setUrlVideo] = useState<string>();
     const history = useHistory();
 
-    const [isShow, setIsShow] = useState(false);
-    const [isError, setIsError] = useState(false);
 
     const {authenticated} = useAppContext();
 
@@ -57,12 +54,8 @@ const DetailMyCoursePage: React.FC = () => {
                 .then((response) => {
                     if (response?.status === 200 && response?.data.success) {
                         setLessons(response?.data.content);
-
                     }
-                }).catch(_ => {
-                setIsShow(true);
-                setIsError(true);
-            });
+                });
         } else {
             getCourseBySlug(slug).then(resp => {
                 if (resp.status === 200 && resp.data.success) {
@@ -120,7 +113,6 @@ const DetailMyCoursePage: React.FC = () => {
                     <MyTable lessons={lessons} isVideos={setUrlVideo}/>
                 </WrapperLesson> :
                 <></>}
-            <Modal show={isShow} error={isError}/>
         </Container>
     );
 }

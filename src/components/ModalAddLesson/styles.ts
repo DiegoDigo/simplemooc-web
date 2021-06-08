@@ -85,6 +85,10 @@ export const ButtonClose = styled(Button)`
 export const WrapperButton = styled.div`
   display: flex;
   flex-direction: row;
-`;
+  width: 50%;
 
+  @media (max-width: ${breakpointsWidth.sm}) {
+    width: 90%;
+  }
+`;
 

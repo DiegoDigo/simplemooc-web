@@ -37,7 +37,7 @@ const CardItem: React.FC<ICardItem> = ({url, title, description, date, star, slu
             </DataWrapper>
             <DetailWrapper>
                 <Title>{capitalize(title)}</Title>
-                <Description>{capitalize(description)}</Description>
+                <Description>{description}</Description>
             </DetailWrapper>
             <ButtonWrapper>
                 {authenticated && isMyCourse() ? <Button to={`/detail/my/${slug}`}>Fazer Curso</Button> :

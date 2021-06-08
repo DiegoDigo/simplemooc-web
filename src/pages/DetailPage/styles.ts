@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
 import {breakpointsWidth} from "../../styles/variables";
-import {MdAdd, MdEdit, MdImportantDevices} from "react-icons/md";
+import {MdAdd, MdEdit, MdImportantDevices, MdDelete} from "react-icons/md";
 
 
 export const Container = styled.div`
@@ -134,6 +134,10 @@ export const IconAdd = styled(MdAdd)`
 `;
 
 export const IconEdit = styled(MdEdit)`
+  ${Icon};
+`
+
+;export const IconDelete = styled(MdDelete)`
   ${Icon};
 `;
 

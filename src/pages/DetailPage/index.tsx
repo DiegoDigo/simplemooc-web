@@ -13,12 +13,12 @@ import {
     InfoAdminWrapper,
     InfoWrapper,
     Number,
-    Title,
+    Title,IconDelete,
     TitleWrapper
 } from './styles';
 import {useHistory, useParams} from 'react-router-dom'
 import {DetailParams} from "../../core/models/params/DetailParams";
-import {getCourseBySlug} from "../../data/services/CursoService";
+import {deleteCourse, getCourseBySlug} from "../../data/services/CursoService";
 import {CourseResponse} from "../../data/models/Response/CourseResponse";
 import IconStar from "../../components/IconStars";
 import {formatDate} from "../../core/util/data.util";
@@ -29,6 +29,8 @@ import ModalAddLesson from "../../components/ModalAddLesson";
 import Image from "../../components/Image";
 import ModalUpdate from "../../components/ModalUpdate";
 import {getQuantityLesson} from "../../data/services/lessonService";
+import Modal from "../../components/Modal";
+import {toast} from "react-toastify";
 
 
 const DetailPage: React.FC = () => {
@@ -37,6 +39,7 @@ const DetailPage: React.FC = () => {
     const [quantityLesson, setQuantityLesson] = useState(0);
     const {authenticated} = useAppContext();
     const [show, setShow] = useState(false);
+    const [excluir, setExcluir] = useState(false);
     const [edit, setEdit] = useState(false);
     const [url, setUrl] = useState<any>(undefined);
 
@@ -62,6 +65,18 @@ const DetailPage: React.FC = () => {
                     setQuantityLesson(resp.data.content.quantity)
                 }
             });
+    }
+
+    const remove = () => {
+        deleteCourse(course.id)
+            .then((resp) => {
+                if(resp.status === 204){
+                    toast.success("curso removido.");
+                    history.push("/");
+                }
+            }).catch(error => {console.log(error)})
+
+
     }
 
 
@@ -98,10 +113,13 @@ const DetailPage: React.FC = () => {
                 </InfoAdminWrapper>
                 <ButtonWrapper>
                     {authenticated && role === "Admin" ?
+                        <Button onClick={() => setShow(true)}><IconAdd/>Adicionar aula</Button> :
+                        <></>}
+                    {authenticated && role === "Admin" ?
                         <Button onClick={() => setEdit(true)}><IconEdit/>Editar</Button> :
                         <></>}
                     {authenticated && role === "Admin" ?
-                        <Button onClick={() => setShow(true)}><IconAdd/>Adicionar aula</Button> :
+                        <Button onClick={() => setExcluir(true)}><IconDelete/>Remover</Button> :
                         <></>}
                     {role !== 'Admin' ? authenticated ?
                         <Button onClick={() => enrollmentByCurse(course.id)}>Inscrever-se</Button> :
@@ -115,6 +133,7 @@ const DetailPage: React.FC = () => {
 
             <ModalAddLesson course={course} show={show} key={course.id} setShowParent={setShow} getQuantityLesson={getQuantityLessonCallBack}/>
             <ModalUpdate show={edit} setAdd={setEdit} course={course}/>
+            <Modal show={excluir} deleteFunction={remove} setExcluir={setExcluir}/>
         </Container>
     );
 }

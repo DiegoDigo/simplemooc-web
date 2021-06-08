@@ -1,4 +1,5 @@
 export default interface ModalCreateModel {
     show: boolean,
-    setAdd: Function
+    setAdd: Function,
+    getData: () => void
 }

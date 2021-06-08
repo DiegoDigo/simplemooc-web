@@ -58,15 +58,20 @@ export const Description = styled.p`
 
 
 export const Button = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   width: 50%;
   height: 45px;
   font-size: 18px;
-  font-weight: 600;
   border-radius: 15px;
   cursor: pointer;
   background-color: var(--primary-color);
   color: var(--white-color);
+  font-family: var(--subtitle-font);
+  font-weight: bolder;
 
 `;
 
@@ -75,7 +80,6 @@ export const ButtonClose = styled(Button)`
   color: var(--baclk-color);
   margin-left: 10px;
 `;
-
 
 export const WrapperButton = styled.div`
   display: flex;

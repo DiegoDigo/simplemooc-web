@@ -1,9 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
-import {CardWrapper, Container, Title, WrapperHeader, WrapperNoData, Button, IconAdd} from './styles';
+import {
+    Button,
+    CardWrapper,
+    Container,
+    IconAdd,
+    InputField,
+    Title,
+    WrapperHeader,
+    WrapperNoData,
+    SearchWrapper,
+    ButtonSearch,
+    IconSearch
+} from './styles';
 import CardItem from "../../components/CardItem/Index";
 import {CourseResponse} from "../../data/models/Response/CourseResponse";
-import {getAllCourse} from "../../data/services/CursoService";
+import {getAllCourse, searchCourse} from "../../data/services/CursoService";
 import {useHistory} from "react-router-dom";
 import {getAllEnrollment} from "../../data/services/EnrollmentService";
 import NoData from "../../components/NoData";
@@ -15,10 +27,19 @@ const HomePage: React.FC = () => {
 
     const history = useHistory()
     const [courses, setCourses] = useState([] as Array<CourseResponse>)
+    const [search, setSearch] = useState("");
     const [add, setAdd] = useState<boolean>(false)
     const [isMyCourse, setIsMyCourse] = useState(false)
     const {authenticated} = useAppContext();
     const role = useRole()
+
+    const getData = () => {
+        getAllCourse().then(resp => {
+            if (resp.status === 200 && resp.data.success) {
+                setCourses(resp.data.content);
+            }
+        })
+    }
 
     useEffect(() => {
         if (history.location.pathname.startsWith("/my")) {
@@ -30,14 +51,24 @@ const HomePage: React.FC = () => {
                 }
             })
         } else {
-            getAllCourse().then(resp => {
-                if (resp.status === 200 && resp.data.success) {
-                    setCourses(resp.data.content);
-                }
-            })
+            getData();
         }
     }, [history])
 
+
+    const seek = () => {
+        if (search) {
+            searchCourse(search)
+                .then((resp) => {
+                    if (resp.status === 200 && resp.data.success) {
+                        setCourses(resp.data.content);
+                    }
+                })
+        } else {
+            getData();
+        }
+
+    }
 
     const noData = () => {
         return (
@@ -47,10 +78,29 @@ const HomePage: React.FC = () => {
         );
     }
 
+    const handlerValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+        console.log(e.target.value)
+        if(e.target.value === "" ||  e.target.value.length < 0) {
+            getData()
+        }
+    }
+
+    const searchComponent = () => {
+        return (
+            <SearchWrapper>
+                <InputField value={search}
+                            onChange={handlerValue}
+                            placeholder="Procure o curso aqui." type="search" />
+                <ButtonSearch onClick={seek}><IconSearch/></ButtonSearch>
+            </SearchWrapper>);
+    }
+
     return (
         <Container>
             <WrapperHeader>
                 <Title> {isMyCourse ? "Meus Cursos" : "Escolha um novo curso"}</Title>
+                {isMyCourse ? <></> : searchComponent()}
                 {authenticated && role === "Admin" ?
                     <Button onClick={() => setAdd(true)}><IconAdd/>Criar Aula</Button> :
                     <></>}
@@ -70,7 +120,7 @@ const HomePage: React.FC = () => {
 
             </CardWrapper>
 
-            <ModalCreate show={add} key={add.toString()} setAdd={setAdd}/>
+            <ModalCreate show={add} key={add.toString()} setAdd={setAdd} getData={getData}/>
         </Container>
     );
 }

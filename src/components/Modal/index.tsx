@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Container, Description, InfoWrapper, Title} from './styles';
+import {Button, Container,  InfoWrapper, Title} from './styles';
 import ModalModel from "../../core/models/ModalModel";
+import {ButtonClose, WrapperButton} from "../ModalAddLesson/styles";
 
-const Modal: React.FC<ModalModel> = ({show, error}) => {
+const Modal: React.FC<ModalModel> = ({show, deleteFunction, setExcluir}) => {
 
     const [isShow, setIsShow] = useState(false);
 
@@ -12,16 +13,17 @@ const Modal: React.FC<ModalModel> = ({show, error}) => {
 
     const close = () => {
         setIsShow(false);
+        setExcluir(false);
     }
 
     return (
         <Container show={isShow}>
-            <InfoWrapper error={error}>
-                <Title error={error}>{error ? "Ops" : "Obrigado por escrever-se"}</Title>
-                <Description error={error}>
-                    {error ? "houve um erro já estamos verificando" : "Curso ja esta disponivel na tela de meus cursos."}
-                </Description>
-                <Button onClick={close}>Fechar</Button>
+            <InfoWrapper>
+                <Title>Apagar o curso?</Title>
+                <WrapperButton>
+                    <Button type="submit" onClick={() => deleteFunction()}>Sim</Button>
+                    <ButtonClose onClick={close} type="button">Não</ButtonClose>
+                </WrapperButton>
             </InfoWrapper>
         </Container>
     );

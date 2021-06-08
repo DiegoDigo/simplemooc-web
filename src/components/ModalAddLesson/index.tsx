@@ -8,7 +8,6 @@ import {FormStyle} from "../../pages/LoginPage/styles";
 import Input from "../Input";
 import InputFile from "../InputFile";
 import Loading from "../Loading";
-import Modal from "../Modal";
 import {Button, ButtonClose, Container, Description, InfoWrapper, Title, WrapperButton} from './styles';
 
 
@@ -18,8 +17,6 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
     
     const [isShow, setIsShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isShowInfo, setIsShowInfo] = useState(false);
-    const [error, setError] = useState(false);
 
     useEffect(() => {
         setIsShow(show);
@@ -32,15 +29,11 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
         await createLesson(values)
             .then(resp => {
                 if (resp.status === 201 && resp.data.success) {
-                    setIsShowInfo(false);
-                    setError(false);
                     setLoading(false);
                     reset();
                     getQuantityLesson(course.id)
                 }
             }).catch(_ => {
-                setIsShowInfo(true);
-                setError(true);
                 setLoading(false);
             });
     }
@@ -80,9 +73,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
                         );
                     }}
                 </Formik>
-
             </InfoWrapper>
-            <Modal show={isShowInfo} error={error}/>
         </Container>
     );
 }
