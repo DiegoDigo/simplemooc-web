@@ -11,9 +11,11 @@ import {
     TitleWrapper,
     Video,
     WrapperHeader,
-    WrapperLesson
+    WrapperLesson,
+    ButtonWrapper,
+    Button
 } from './styles';
-import {useParams} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import {getCourseBySlug} from "../../data/services/CursoService";
 import {CourseResponse} from "../../data/models/Response/CourseResponse";
 import IconStar from "../../components/IconStars";
@@ -25,13 +27,15 @@ import {LessonResponse} from "../../data/models/Response/LessonResponse";
 import MyTable from "../../components/MyTable";
 import {DetailParams} from "../../core/models/params/DetailParams";
 import Image from "../../components/Image";
-
+import {putCloseEnrollment} from "../../data/services/EnrollmentService";
+import {toast} from 'react-toastify';
 
 const DetailMyCoursePage: React.FC = () => {
 
     const [course, setCourse] = useState({} as CourseResponse);
     const [lessons, setLessons] = useState([] as Array<LessonResponse>);
     const [urlVideo, setUrlVideo] = useState<string>();
+    const history = useHistory();
 
     const [isShow, setIsShow] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -78,18 +82,30 @@ const DetailMyCoursePage: React.FC = () => {
         )
     }
 
+    const closeEnrollment = (id: string) => {
+        putCloseEnrollment(id).then((resp) => {
+            if (resp.status === 200 && resp.data.success) {
+                toast.info(resp.data.content)
+                history.push("/my")
+            }
+        });
+    }
+
     return (
         <Container>
             <ImageWrapper>
                 <Image url={course.url}/>
                 <DataWrapper>
-                    <Data>{formatDate(course.start)}</Data>
-                    <IconStar stars={3}/>
+                    <Data>{formatDate(course.createAt)}</Data>
+                    <IconStar stars={course.star}/>
                 </DataWrapper>
                 <TitleWrapper>
                     <Title>{course.name}</Title>
                     <Description>{course.description}</Description>
                 </TitleWrapper>
+                <ButtonWrapper>
+                    <Button onClick={() => closeEnrollment(course.id)}>Sair do curso</Button>
+                </ButtonWrapper>
             </ImageWrapper>
 
             <InfoWrapper>

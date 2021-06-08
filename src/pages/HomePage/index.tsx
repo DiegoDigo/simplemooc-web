@@ -57,20 +57,20 @@ const HomePage: React.FC = () => {
             </WrapperHeader>
             <CardWrapper>
                 {courses.length === 0 ? noData() :
-                    courses.map((course, index) => {
+                    courses.map((course) => {
                         return (<CardItem key={course.id}
                                           url={course.url}
-                                          starts={index === 0 ? 1 : index <= 5 ? index : 5}
+                                          star={course.star}
                                           title={course.name}
                                           description={course.description}
-                                          date={course.start}
+                                          date={course.createAt}
                                           slug={course.slug}
                         />);
                     })}
 
             </CardWrapper>
 
-            <ModalCreate show={add} key={add.toString()} setAdd={setAdd} />
+            <ModalCreate show={add} key={add.toString()} setAdd={setAdd}/>
         </Container>
     );
 }

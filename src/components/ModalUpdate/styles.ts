@@ -83,9 +83,3 @@ export const ButtonClose = styled(Button)`
 `;
 
 
-export const WrapperButton = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-

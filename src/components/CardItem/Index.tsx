@@ -18,7 +18,7 @@ import {useHistory} from "react-router-dom";
 import Image from "../Image";
 
 
-const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 5, slug}) => {
+const CardItem: React.FC<ICardItem> = ({url, title, description, date, star, slug}) => {
 
     const {authenticated} = useAppContext();
 
@@ -33,7 +33,7 @@ const CardItem: React.FC<ICardItem> = ({url, title, description, date, starts = 
             <Image url={url} home={true}/>
             <DataWrapper>
                 <Data>{formatDate(date)}</Data>
-                <IconStar stars={starts}/>
+                <IconStar stars={star}/>
             </DataWrapper>
             <DetailWrapper>
                 <Title>{capitalize(title)}</Title>

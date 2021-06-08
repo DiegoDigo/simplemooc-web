@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Container, InfoWrapper, Title, Description, Button} from './styles';
+import {Button, Container, Description, InfoWrapper, Title} from './styles';
 import ModalModel from "../../core/models/ModalModel";
-import {useHistory} from "react-router-dom";
 
 const Modal: React.FC<ModalModel> = ({show, error}) => {
 
-    const history = useHistory();
     const [isShow, setIsShow] = useState(false);
 
     useEffect(() => {
@@ -13,11 +11,6 @@ const Modal: React.FC<ModalModel> = ({show, error}) => {
     }, [show])
 
     const close = () => {
-        if(!error){
-            history.push("/my");
-        }else{
-            history.push("/login");
-        }
         setIsShow(false);
     }
 

@@ -4,5 +4,5 @@ export interface ICardItem {
     title: string,
     description: string,
     date: Date,
-    starts: number
+    star: number
 }

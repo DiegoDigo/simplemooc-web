@@ -54,8 +54,8 @@ const ModalCreate: React.FC<ModalCreateModel> = ({show, setAdd,}) => {
                                 <Input label="Descrição" name="description" placeholder="Descriação do curso"
                                        isValid={(errors.description === undefined || errors.description === null)}/>
                                 <WrapperButton>
-                                    <Button>Adicionar Curso</Button>
-                                    <ButtonClose onClick={close}>Fechar</ButtonClose>
+                                    <Button type="submit">Adicionar Curso</Button>
+                                    <ButtonClose type="button" onClick={close}>Fechar</ButtonClose>
                                 </WrapperButton>
                             </FormStyle>
                         );

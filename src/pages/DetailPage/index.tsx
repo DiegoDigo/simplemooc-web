@@ -7,9 +7,12 @@ import {
     DataWrapper,
     Description,
     IconAdd,
+    IconCourse,
     IconEdit,
     ImageWrapper,
+    InfoAdminWrapper,
     InfoWrapper,
+    Number,
     Title,
     TitleWrapper
 } from './styles';
@@ -25,11 +28,13 @@ import useRole from "../../core/hooks/useRole";
 import ModalAddLesson from "../../components/ModalAddLesson";
 import Image from "../../components/Image";
 import ModalUpdate from "../../components/ModalUpdate";
+import {getQuantityLesson} from "../../data/services/lessonService";
 
 
 const DetailPage: React.FC = () => {
 
     const [course, setCourse] = useState({} as CourseResponse);
+    const [quantityLesson, setQuantityLesson] = useState(0);
     const {authenticated} = useAppContext();
     const [show, setShow] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -47,15 +52,31 @@ const DetailPage: React.FC = () => {
         getEnrollmentByCourse(id).then(resp => {
             const {slug} = resp.data.content
             history.push(`my/${slug}`)
-        }).catch(error => console.log(error));
+        });
     }
+
+    const getQuantityLessonCallBack = (id: string) => {
+        return getQuantityLesson(id)
+            .then((resp) => {
+                if (resp.status === 200 && resp.data.success) {
+                    setQuantityLesson(resp.data.content.quantity)
+                }
+            });
+    }
+
 
     useEffect(() => {
         setEdit(false);
-        getCourseBySlug(slug).then(resp => {
-            if (resp.status === 200 && resp.data.success) {
-                setCourse(resp.data.content);
-                setUrl(resp.data.content.url);
+        getCourseBySlug(slug)
+            .then(resp => {
+                if (resp.status === 200 && resp.data.success) {
+                    setCourse(resp.data.content);
+                    setUrl(resp.data.content.url);
+                    return getQuantityLesson(resp.data.content.id)
+                }
+            }).then((resp) => {
+            if (resp?.status === 200 && resp?.data?.success) {
+                setQuantityLesson(resp.data.content.quantity)
             }
         })
     }, [slug]);
@@ -68,9 +89,13 @@ const DetailPage: React.FC = () => {
                     <Title>{course.name}</Title>
                 </TitleWrapper>
                 <DataWrapper>
-                    <Data>{formatDate(course.start)}</Data>
-                    <IconStar stars={3}/>
+                    <Data>{formatDate(course.createAt)}</Data>
+                    <IconStar stars={course.star}/>
                 </DataWrapper>
+                <InfoAdminWrapper>
+                    <IconCourse/>
+                    <Description><Number>{quantityLesson}</Number> Aulas</Description>
+                </InfoAdminWrapper>
                 <ButtonWrapper>
                     {authenticated && role === "Admin" ?
                         <Button onClick={() => setEdit(true)}><IconEdit/>Editar</Button> :
@@ -88,8 +113,8 @@ const DetailPage: React.FC = () => {
                 <Description>{course.description}</Description>
             </InfoWrapper>
 
-            <ModalAddLesson course={course} show={show} key={course.id} setShowParent={setShow}/>
-            <ModalUpdate show={edit} setAdd={setEdit}  course={course} />
+            <ModalAddLesson course={course} show={show} key={course.id} setShowParent={setShow} getQuantityLesson={getQuantityLessonCallBack}/>
+            <ModalUpdate show={edit} setAdd={setEdit} course={course}/>
         </Container>
     );
 }

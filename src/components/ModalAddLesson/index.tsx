@@ -1,18 +1,18 @@
-import { Formik } from "formik";
-import React, { useEffect, useState } from 'react';
+import {Formik} from "formik";
+import React, {useEffect, useState} from 'react';
 import ModalAddLessonModel from "../../core/models/ModalAddLessonModel";
-import { LessonSchemaValidator } from "../../core/models/Validators/course.validator";
-import { LessonRequest } from "../../data/models/Request/LessonRequest";
-import { createLesson } from "../../data/services/lessonService";
-import { FormStyle } from "../../pages/LoginPage/styles";
+import {LessonSchemaValidator} from "../../core/models/Validators/course.validator";
+import {LessonRequest} from "../../data/models/Request/LessonRequest";
+import {createLesson} from "../../data/services/lessonService";
+import {FormStyle} from "../../pages/LoginPage/styles";
 import Input from "../Input";
 import InputFile from "../InputFile";
 import Loading from "../Loading";
 import Modal from "../Modal";
-import { Button, ButtonClose, Container, Description, InfoWrapper, Title, WrapperButton } from './styles';
+import {Button, ButtonClose, Container, Description, InfoWrapper, Title, WrapperButton} from './styles';
 
 
-const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowParent}) => {
+const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowParent, getQuantityLesson}) => {
 
     const initialValues: LessonRequest = {courseId: course.id, name: "", material: undefined, description: ""};
     
@@ -36,6 +36,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
                     setError(false);
                     setLoading(false);
                     reset();
+                    getQuantityLesson(course.id)
                 }
             }).catch(_ => {
                 setIsShowInfo(true);
@@ -45,9 +46,10 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
     }
 
 
-    const close = () => {
+    const close = (resetForm: Function) => {
         setIsShow(false);
         setShowParent(false);
+        resetForm();
     }
 
     return (
@@ -60,7 +62,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
                             addLesson(values, resetForm);
                         }}>
                     {(formik) => {
-                        const {errors, setFieldValue} = formik;
+                        const {errors, setFieldValue, resetForm} = formik;
                         return (
                             <FormStyle>
                                 <Input label="Nome" placeholder="ex: aula de layout" name="name"
@@ -72,7 +74,7 @@ const ModalAddLesson: React.FC<ModalAddLessonModel> = ({course, show, setShowPar
                                 <WrapperButton>
                                     {loading ? <Button> <Loading/></Button> :
                                         <Button type="submit">Adicionar Aula</Button>}
-                                    <ButtonClose onClick={close}>Fechar</ButtonClose>
+                                    <ButtonClose type="button" onClick={() => close(resetForm)}>Fechar</ButtonClose>
                                 </WrapperButton>
                             </FormStyle>
                         );

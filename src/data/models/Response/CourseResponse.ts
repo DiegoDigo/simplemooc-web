@@ -4,5 +4,6 @@ export interface CourseResponse {
     description: string,
     slug: string,
     url: string,
-    start: Date
+    createAt: Date,
+    star: number
 }

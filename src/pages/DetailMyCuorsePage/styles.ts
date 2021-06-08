@@ -27,8 +27,8 @@ export const ImageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-height: calc(100vh - 240px);
   border-radius: 15px;
+  max-height: 657px;
   background-color: var(--white-color);
 
 
@@ -135,6 +135,8 @@ export const TitleWrapper = styled.div`
   align-items: center;
   width: 100%;
   padding: 18px;
+
+
 `;
 
 export const WrapperHeader = styled.div`

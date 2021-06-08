@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
 import {breakpointsWidth} from "../../styles/variables";
-import {MdAdd, MdEdit} from "react-icons/md";
+import {MdAdd, MdEdit, MdImportantDevices} from "react-icons/md";
 
 
 export const Container = styled.div`
@@ -30,6 +30,7 @@ export const ImageWrapper = styled.div`
   width: 100%;
   border-radius: 15px;
   background-color: var(--white-color);
+  max-height: 675px;
 `;
 
 export const InfoWrapper = styled.div`
@@ -136,5 +137,25 @@ export const IconEdit = styled(MdEdit)`
   ${Icon};
 `;
 
+export const IconCourse = styled(MdImportantDevices)`
+  ${Icon};
+  width: 25px;
+  height: 25px;
+  color: var(--black-color);
+`;
 
 
+export const InfoAdminWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 18px;
+  padding-right: 18px;
+  margin-top: 18px;
+`;
+
+export const Number = styled.span`
+  margin-left: 10px;
+  margin-right: 10px;
+  font-weight: bold;
+`;

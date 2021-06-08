@@ -14,10 +14,10 @@ import {updateCourse} from "../../data/services/CursoService";
 const ModalUpdate: React.FC<ModalUpdateModel> = ({show, setAdd, course}) => {
 
     const initialValues: CourseUpdateRequest = {
-        id: course.id,
-        name: course.name,
+        id: course.id ? course.id : "",
+        name: course.name ? course.name : "",
         image: undefined,
-        description: course.description,
+        description: course.description ? course.description : "",
     }
 
 
@@ -69,7 +69,7 @@ const ModalUpdate: React.FC<ModalUpdateModel> = ({show, setAdd, course}) => {
                                        isValid={(errors.description === undefined || errors.description === null)}
                                 />
                                 <WrapperButton>
-                                    <Button type="submit">update</Button>
+                                    <Button type="submit">Atualizar</Button>
                                     <ButtonClose onClick={close} type="button">Fechar</ButtonClose>
                                 </WrapperButton>
                             </FormStyle>
