@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
     const history = useHistory();
 
     const logout = () => {
-        localStorage.clear();
+        sessionStorage.clear();
         setAuthenticated(false);
         setRole("");
         history.push("/")
