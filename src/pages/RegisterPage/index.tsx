@@ -17,7 +17,7 @@ const RegisterPage: React.FC = () => {
 
     const intialValues: RegisterRequest = {email: "", password: ""};
     const [loading, setLoading] = useState(false);
-    const {setRole} = useAppContext();
+    const {setRole, setAuthenticated} = useAppContext();
     const history = useHistory();
 
     const register = async (data: RegisterRequest) => {
@@ -30,6 +30,7 @@ const RegisterPage: React.FC = () => {
                 const tokenDecode = decode(token) as Token;
                 setRole(tokenDecode.role);
                 history.push("/");
+                setAuthenticated(true);
             }).catch((_) => setLoading(false));
     }
 
